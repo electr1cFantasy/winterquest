@@ -1,0 +1,386 @@
+<!--Saved by Quest 5.8.6836.13983-->
+<asl version="580">
+  <include ref="English.aslx" />
+  <include ref="Core.aslx" />
+  <game name="Winterquest">
+    <gameid>655fcc26-060c-48e2-8c6d-3fc14a4ef44c</gameid>
+    <version>1.2</version>
+    <firstpublished>2020</firstpublished>
+    <subtitle>Embrace the cold.</subtitle>
+    <author>electr1cFantasy</author>
+    <showhealth type="boolean">false</showhealth>
+    <feature_limitinventory />
+    <feature_lightdark />
+    <feature_advancedwearables />
+    <category>Horror</category>
+    <autodescription />
+    <attr name="autodescription_youcango" type="int">4</attr>
+    <attr name="autodescription_description" type="int">2</attr>
+    <attr name="autodescription_youcansee" type="int">0</attr>
+  </game>
+  <object name="clearing">
+    <inherit name="editor_room" />
+    <isroom />
+    <descprefix>Here you stand, in a</descprefix>
+    <alias>clearing</alias>
+    <description><![CDATA[The ground is covered in wild, untamed grass, which is itself covered in a thin layer of ice. At the clearing's edge, you can see tall pine trees that stretch high up into the air, forming a forest all around you.<br/>White, fluffy snow is falling from the sky, blown about by a cool breeze. The snow has begun to build up between the grass and on the tops of trees, already a few inches thick. Aside from the chill wind, the forest is almost completely quiet.]]></description>
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+      <volume type="int">20</volume>
+      <pov_alt type="stringlist">
+        <value>me</value>
+        <value>myself</value>
+        <value>self</value>
+        <value>questant</value>
+      </pov_alt>
+      <attr name="pov_look" type="script">
+        msg ("Looking good.")
+      </attr>
+    </object>
+    <exit alias="west" to="chillingpath">
+      <inherit name="westdirection" />
+    </exit>
+  </object>
+  <object name="chillingpath">
+    <inherit name="editor_room" />
+    <descprefix>You are walking down a</descprefix>
+    <alias>forest path</alias>
+    <description><![CDATA[As you walk further west, the dense trees of the forest spread out a bit, leading to an open hill.<br/>The floor of this path is made of tightly-packed and chilled dirt, the grass worn away by many a creature treading back and forth along it. There's a fallen tree nearby crossing the path, but it's not enough of an obstacle to warrant any effort. A bit of fungus is growing on the side of the tree.]]></description>
+    <exit alias="east" to="clearing">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="stonehill">
+      <inherit name="westdirection" />
+    </exit>
+  </object>
+  <object name="stonehill">
+    <inherit name="editor_room" />
+    <alias>gently sloped hill</alias>
+    <descprefix>You arrive at</descprefix>
+    <description><![CDATA[The hill is covered in grass and a thick layer of snow, much like the rest of the forest. Dotting the hill are several standing stones, some upright and some lying on their side. Between the stones, the dirt is disturbed in deep grooves, seeming as if the large menhirs had been dragged along the ground quite recently. They sit in irregular positions, with no obvious pattern between them.<br/>It is easy to weave through the stones, so you can climb the hill without difficulty.]]></description>
+    <exit alias="east" to="chillingpath">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="uphill path">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="north" to="northriverpath">
+      <inherit name="northdirection" />
+    </exit>
+  </object>
+  <object name="uphill path">
+    <inherit name="editor_room" />
+    <descprefix>You ascend</descprefix>
+    <usedefaultprefix />
+    <description><![CDATA[The path is a bit steeper than the hill before it, but a bit easier to climb. This path is part of the base of a small mountain, connected further west to a ridge of even larger mountains.<br/>Although, like everything else, it is covered in snow, the packed dirt and rock underneath makes it still viable to walk upon. The hill slopes off to the south a  bit, but there's a spot to the north and further west that you could climb up, leading to another path higher up this first foothill.<br/>To the south you can see a log cabin. Through a window, you can see that the lights are off.]]></description>
+    <exit alias="east" to="stonehill">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="southwest" to="mountainside">
+      <inherit name="southwestdirection" />
+    </exit>
+  </object>
+  <object name="mountainside">
+    <inherit name="editor_room" />
+    <descprefix>You stand at</descprefix>
+    <alias>outside of a cabin</alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <prefix>the</prefix>
+    <description><![CDATA[Heavy banks of snow have built up on its roof and around its wall, after what must be years of being left alone.<br/>The cabin's walls are thick and rather sturdy, but frost has worked its way into the outermost layer of the wood. There is a single door on the east side of the cabin, where you stand. Off to the west, along the south side of the house, there is a pile of firewood.]]></description>
+    <exit alias="northeast" to="uphill path">
+      <inherit name="northeastdirection" />
+    </exit>
+    <exit alias="west" to="cabinside">
+      <inherit name="westdirection" />
+    </exit>
+    <exit name="cabin door" alias="in" to="cabin">
+      <inherit name="indirection" />
+      <locked type="boolean">false</locked>
+      <runscript />
+      <lightsource />
+      <lightstrength>weak</lightstrength>
+      <script type="script">
+        if (Got(oldkey)) {
+          MoveObject (player, cabin)
+        }
+        else {
+          msg ("You try the door, but it's locked. You need a key.")
+        }
+      </script>
+    </exit>
+  </object>
+  <object name="cabin">
+    <inherit name="editor_room" />
+    <descprefix>You are inside a</descprefix>
+    <alias>warm cabin</alias>
+    <description><![CDATA[The fire roars gently on the right side of the room, painting the room in warm shades of orange and providing ample light.<br/>Standing in the center of the cabin's single chamber, your feet rest on an ornate square rug, woven from thick, colorful fabrics. The room is quiet and calm, the only sound being the crackling of the fire and your own breathing.<br/>Against the left wall there is a desk, with a few papers stacked on it, as well as a pencil and a leather-bound book that seems to be a journal of some sort. Also on the left side, against the far wall, is a large bed for one person. It has a thick quilt, comforter, and a couple blankets, as well as some pillows lined up neatly by its headboard. <br/>On the right side of the room there sits the fireplace, lit and burning bright. On top of the fireplace's mantel, there's a framed photograph of something. Further from the door is a small armoire, with two drawers and a main cabinet. Closer to the near wall is a large chest, currently shut and locked. ]]></description>
+    <dark />
+    <darkroomdescription>Even though any lights in the cabin seem to have long gone off, it is still a bit warmer compared to the outside air. It is dark inside, and the outside light is not enough to illuminate the room fully. Even in the dim light, however, you can see a large brick fireplace on the right side of the room. The fireplace is empty, the logs that once fueled it having either been burned away or decomposed. There's fresh logs outside that you could use to start a good flame, but you'd need to find something to start it with. There's a desk on the right side of the room, close to the door; maybe you could start there.</darkroomdescription>
+    <beforefirstenter type="script">
+    </beforefirstenter>
+    <exit alias="out" to="mountainside">
+      <inherit name="outdirection" />
+      <lightsource />
+      <lightstrength>weak</lightstrength>
+    </exit>
+    <object name="fireplace">
+      <inherit name="editor_object" />
+      <haslogs type="boolean">false</haslogs>
+      <feature_lightdark />
+      <lightstrength>weak</lightstrength>
+      <lightsource />
+      <take type="script">
+        msg ("If only you could take the fireplace. Sadly, you cannot.")
+      </take>
+    </object>
+    <object name="matchbox">
+      <inherit name="editor_object" />
+      <take />
+      <takemsg>You pick up the box of matches. You feel warmer already.</takemsg>
+      <dropmsg>You drop the box of matches. Thankfully, none of them spill out.</dropmsg>
+      <volume type="int">1</volume>
+      <feature_usegive />
+      <attr name="feature_container" type="boolean">false</attr>
+      <feature_lightdark />
+      <lightsource />
+      <alias>box of matches</alias>
+      <alt type="stringlist">
+        <value>matches</value>
+        <value>match box</value>
+        <value>matchbox</value>
+      </alt>
+      <listchildren />
+      <listchildrenprefix>It contains</listchildrenprefix>
+      <openmsg>You open the box of matches. Shockingly, there's matches inside.</openmsg>
+      <closemsg>You close the box.</closemsg>
+      <containermaxobjects>You can't fit anything more in there, sadly.</containermaxobjects>
+      <look>It's a small box of matches, only a few inches in size. Looks like it slides open easily.</look>
+      <lightstrength>weak</lightstrength>
+      <visible type="boolean">false</visible>
+      <addscript type="script">
+      </addscript>
+      <selfuseanything type="script">
+        msg ("{random:Are you some sort of pyromaniac?:I don't think that's a good idea.:Is that even legal?:Please don't.}")
+      </selfuseanything>
+      <selfuseon type="scriptdictionary">
+        <item key="fireplace">
+          if (fireplace.haslogs = true) {
+            msg ("You strike up a match, and use it to start a small flame. It's not much, but soon enough you've got a roaring fire on your hands! Safely contained within the fireplace, it lights up the room rather nicely.")
+            SetObjectLightstrength (fireplace, "strong")
+          }
+          else if (fireplace.haslogs = false) {
+            msg ("You can't start a fire, since there's no firewood!")
+          }
+        </item>
+      </selfuseon>
+    </object>
+    <object name="desk">
+      <inherit name="editor_object" />
+      <inherit name="surface" />
+      <feature_container />
+      <feature_startscript />
+      <listchildren />
+      <listchildrenprefix>On the desk there is</listchildrenprefix>
+      <feature_lightdark />
+      <lightsource />
+      <lightstrength>weak</lightstrength>
+      <addscript type="script">
+      </addscript>
+      <attr name="_initialise_" type="script">
+        MoveObject (matchbox, desk)
+      </attr>
+      <look type="script">
+        msg ("You look at the desk. In the dark, you can make out the shape of a box of matches on its surface, among a few other things that are a bit harder to see.")
+        MakeObjectVisible (matchbox)
+      </look>
+    </object>
+    <object name="bed">
+      <inherit name="editor_object" />
+      <alias>warm bed</alias>
+      <alt type="stringlist">
+        <value>bed</value>
+      </alt>
+      <look>It's a bed, with a thick quilt and comforter, and a few blankets. Several pillows rest at its head.</look>
+      <take type="script">
+        msg ("You can't take the whole bed with you!")
+      </take>
+      <sleep type="script">
+        msg ("You climb into bed, and pull the covers over yourself. Getting quite comfortable, you soon drift off into sleep. Wake up whenever you'd like.")
+        wait {
+          msg ("You wake up. You feel rested!")
+        }
+      </sleep>
+      <sleepin type="script">
+        msg ("You climb into bed, and pull the covers over yourself. Getting quite comfortable, you soon drift off into sleep. Wake up whenever you'd like.")
+        wait {
+          msg ("You wake up. You feel rested!")
+        }
+      </sleepin>
+    </object>
+    <object name="photo">
+      <inherit name="editor_object" />
+      <alias>photograph</alias>
+      <alt type="stringlist">
+        <value>photo</value>
+        <value>picture</value>
+      </alt>
+      <look>You look at the photo. It's a photograph of a nature scene, seemingly from somewhere in the forest nearby. It's a picture of a thin path leading into an area of thick trees, like a tunnel through the forest itself. In the middle of the path, there's a snapped stick. Looking at the scene, something feels off - you can't tell what, exactly, but it's almost like the photo itself is uncomfortable.</look>
+      <take type="script">
+        msg ("While you quite easily could take it, you feel as though you should probably leave the photo be.")
+      </take>
+    </object>
+    <object name="armoire">
+      <inherit name="editor_object" />
+      <inherit name="container_closed" />
+      <attr name="feature_usegive" type="boolean">false</attr>
+      <feature_container />
+      <hidechildren />
+      <listchildren />
+      <listchildrenprefix>Inside the armoire is</listchildrenprefix>
+      <openmsg>You pull open the main cabinet, as well as the drawers.</openmsg>
+      <closemsg>You push the armoire's many parts shut.</closemsg>
+      <feature_startscript />
+      <take type="script">
+        msg ("You can't take it. Too big.")
+      </take>
+      <attr name="_initialise_" type="script">
+        MoveObject (jacket, armoire)
+      </attr>
+    </object>
+    <object name="jacket">
+      <inherit name="editor_object" />
+      <inherit name="wearable" />
+      <attr name="feature_usegive" type="boolean">false</attr>
+      <use type="boolean">false</use>
+      <take />
+      <takemsg>You take the jacket. It's rather light, for how puffy it is.</takemsg>
+      <volume type="int">5</volume>
+      <dropmsg>You drop the axe. It clatters to the floor.</dropmsg>
+      <feature_wearable />
+      <wear_slots type="stringlist">
+        <value>torso</value>
+      </wear_slots>
+      <attr name="wear_layer" type="int">2</attr>
+      <wearmsg>You don the jacket. The winter air feels a little less cold now!</wearmsg>
+      <removemsg>You take off the jacket with ease.</removemsg>
+    </object>
+  </object>
+  <object name="cabinside">
+    <inherit name="editor_room" />
+    <alias>side of the cabin</alias>
+    <descprefix>You stand at</descprefix>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <prefix>the</prefix>
+    <description type="script">
+      msg ("It's a pretty normal wooden wall. Built against it is a rack for firewood, piled high with some chopped logs and a few gathered sticks.")
+      if (logs.pushed = true) {
+        msg ("The log pile has toppled over, leaving the once neatly stacked wood scattered about on the ground.")
+      }
+      else if (logs.pushed = false) {
+        msg ("Part of the firewood looks a bit off, like there's something stopping the wood from fully settling...")
+      }
+    </description>
+    <exit alias="east" to="mountainside">
+      <inherit name="eastdirection" />
+    </exit>
+    <object name="oldkey">
+      <inherit name="editor_object" />
+      <alt type="stringlist">
+        <value>key</value>
+        <value>rusty key</value>
+      </alt>
+      <alias>old key</alias>
+      <dropmsg>The key clatters to the ground.</dropmsg>
+      <look>It's an old key, worn down a bit by several years of sitting outside in the cold. Its condition makes it no less usable, however.</look>
+      <visible type="boolean">false</visible>
+      <take type="boolean">false</take>
+      <not_all />
+      <takemsg>You tug at the key, and it pops loose from the crack.</takemsg>
+    </object>
+    <object name="logs">
+      <inherit name="editor_object" />
+      <alias>firewood</alias>
+      <alt type="stringlist">
+        <value>logs</value>
+        <value>log rack</value>
+        <value>wood</value>
+      </alt>
+      <pushed type="boolean">false</pushed>
+      <volume type="int">3</volume>
+      <dropmsg>You drop the logs, and they fall to the floor. A few tiny fragments of bark scatter about.</dropmsg>
+      <feature_usegive />
+      <search type="script">
+        if (logs.pushed = false) {
+          msg ("You push aside some of the firewood, causing a good bit of it to topple to the ground. In doing so, however, you see that there is a worn key stuck into a crack in the wall, previously hidden by the logs.")
+          MakeObjectVisible (oldkey)
+          set (oldkey, "take", true)
+          set (logs, "pushed", true)
+        }
+        else {
+          msg ("The logs have already been searched.")
+        }
+      </search>
+      <push type="script">
+        if (logs.pushed = false) {
+          msg ("You push aside some of the firewood, causing a good bit of it to topple to the ground. In doing so, however, you see that there is a worn key stuck into a crack in the wall, previously hidden by the logs.")
+          MakeObjectVisible (oldkey)
+          set (oldkey, "take", true)
+          set (logs, "pushed", true)
+        }
+        else {
+          msg ("The logs have already been pushed over.")
+        }
+      </push>
+      <take type="script">
+        AddToInventory (logs)
+        if (logs.pushed = false) {
+          msg ("You pick up a few of the logs.")
+          msg ("In taking some of the firewood, a few of the logs get knocked aside. As they tumble and the pile gets shorter, a crack in the wall is revealed. Jammed into the crack is an old, worn key.")
+          MakeObjectVisible (oldkey)
+          set (oldkey, "take", true)
+          set (logs, "pushed", true)
+        }
+        else {
+          if (game.pov.parent = cabinside) {
+            msg ("You pick up a few of the logs from the collapsed pile.")
+          }
+          else {
+            msg ("You pick up the logs.")
+          }
+        }
+      </take>
+      <selfuseon type="scriptdictionary">
+        <item key="fireplace">
+          msg ("You place the logs in the fireplace.")
+          set (fireplace, "haslogs", true)
+          if (Got(matchbox)) {
+            msg ("Now all you have to do is light them!")
+          }
+          else if (not Got(matchbox)) {
+            msg ("Now to find something to light them with.")
+          }
+          RemoveObject (logs)
+        </item>
+      </selfuseon>
+    </object>
+  </object>
+  <verb>
+    <property>sleepin</property>
+    <pattern>sleep in</pattern>
+    <defaultexpression>"You can't sleep in " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>sleep</property>
+    <pattern>sleep</pattern>
+    <defaultexpression>"You can't sleep " + object.article + "."</defaultexpression>
+  </verb>
+  <object name="northriverpath">
+    <inherit name="editor_room" />
+    <alias>northward path</alias>
+    <descprefix>You walk along</descprefix>
+    <exit alias="south" to="stonehill">
+      <inherit name="southdirection" />
+    </exit>
+  </object>
+</asl>
